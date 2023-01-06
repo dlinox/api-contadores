@@ -200,13 +200,10 @@ class AgremiadosController extends Controller
             }
         }
 
-        $this->response['data'] = [
-            'flag' => $flag,
-            'habil' => $habil,
-            'nombre' => $nombre,
-            'hasta' => $hasta
-        ];
-
+        $this->response['flag'] = $flag;
+        $this->response['habil'] = $habil;
+        $this->response['nombre'] = $nombre;
+        $this->response['hasta'] = $hasta;
         $this->response['message'] = 'Ocurrio un error al eliminar el Pago';
         $this->response['ok'] = true;
         return response()->json($this->response, 200);
@@ -230,7 +227,7 @@ class AgremiadosController extends Controller
             $mes = "";
             $anio = "";
         }
-        $this->response['data'] = $mes . $anio;
+        $this->response['fecha'] = $mes . $anio;
         $this->response['message'] = 'Ocurrio un error al eliminar el Pago';
         $this->response['ok'] = true;
         return response()->json($this->response, 200);
