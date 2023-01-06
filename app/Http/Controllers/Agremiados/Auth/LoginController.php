@@ -31,7 +31,7 @@ class LoginController extends Controller
                 "matricula" => $user->nummat,
                 "direccion" => $user->direccion,
                 "dni" => $user->dni,
-                "habill" => true
+                "movil" => $user->movil,
             ],
             'token' => $token,
             'message' => 'success',
