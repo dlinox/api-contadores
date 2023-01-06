@@ -139,7 +139,8 @@ class AgremiadosController extends Controller
     {
         try {
             DB::transaction(function () use ($idpago) {
-                Pago::where('idpago', $idpago)->delete();
+               //Pago::where('idpago', $idpago)->delete();
+                DB::delete("DELETE FROM pago_detalle WHERE idpago = $idpago;");
                 DB::delete("DELETE FROM pago_detalle WHERE idpago = $idpago;");
                 DB::delete("DELETE FROM pago_voucher WHERE idpago = $idpago;");
             });
