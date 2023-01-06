@@ -152,4 +152,87 @@ class AgremiadosController extends Controller
             return response()->json($this->response, 400);
         }
     }
+
+
+    public function getEstadoHabil()
+    {
+        $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre', 'Enero', 'Febrero'];
+        $num_meses = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '01', '02'];
+        $estado =  DB::select(
+            "SELECT ultimopago, current_date fecha_actual, paterno, materno, nombres 
+            from agremiado 
+            where flag='T' 
+            and idagremiado='{$this->user->idagremiado}'"
+        )[0];
+
+        $flag = false;
+        $habil = false;
+        $nombre = "";
+        $hasta = "";
+
+        if ($estado) {
+            $flag = true;
+            $nombre = $estado->paterno . " " . $estado->materno . " " . $estado->nombres;
+            $fecha_actual = (string)$estado->fecha_actual;
+
+            if (!is_null($estado->ultimopago) and $estado->ultimopago != '') {
+                $anio = substr($estado->ultimopago, 0, 4);
+                $idmes = substr($estado->ultimopago, 4, 2);
+
+                $mes_letras_hasta = $meses[(int)$idmes + 1];
+                $mes_hasta = $num_meses[(int)$idmes + 1];
+
+                if ($idmes >= 11) {
+                    $anio_hasta = $anio + 1;
+                } else {
+                    $anio_hasta = $anio;
+                }
+                $anio_actual = substr($fecha_actual, 0, 4);
+                $mes_actual = substr($fecha_actual, 5, 2);
+
+                $num_actual = (int)($anio_actual . $mes_actual);
+                $num_hasta = (int)($anio_hasta . $mes_hasta);
+
+                if ($num_actual <= $num_hasta) {
+                    $habil = true;
+                    $hasta = $mes_letras_hasta . ' de ' . $anio_hasta;
+                }
+            }
+        }
+
+        $this->response['data'] = [
+            'flag' => $flag,
+            'habil' => $habil,
+            'nombre' => $nombre,
+            'hasta' => $hasta
+        ];
+
+        $this->response['message'] = 'Ocurrio un error al eliminar el Pago';
+        $this->response['ok'] = true;
+        return response()->json($this->response, 200);
+    }
+
+
+    public function getHastaHabil()
+    {
+        $row = DB::select("SELECT max(vd.cuotas) ultimo 
+        FROM ventadetalle vd 
+        LEFT JOIN venta v ON v.idventa = vd.idventa 
+        LEFT JOIN agremiado a ON a.idagremiado = v.idagremiado 
+        WHERE a.idagremiado = '{$this->user->idagremiado}' AND vd.idconcepto = '1' ")[0];
+
+        if (!is_null($row->ultimo)) {
+            $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            $anio = substr($row->ultimo, 0, 4);
+            $idmes = substr($row->ultimo, -2);
+            $mes = $meses[intval($idmes) - 1];
+        } else {
+            $mes = "";
+            $anio = "";
+        }
+        $this->response['data'] = $mes . $anio;
+        $this->response['message'] = 'Ocurrio un error al eliminar el Pago';
+        $this->response['ok'] = true;
+        return response()->json($this->response, 200);
+    }
 }
