@@ -134,4 +134,22 @@ class AgremiadosController extends Controller
         $this->response['ok'] = true;
         return response()->json($this->response, 200);
     }
+
+    public function eliminarPago($idpago)
+    {
+        try {
+            DB::transaction(function () use ($idpago) {
+                Pago::where('idpago', $idpago)->delete();
+                DB::delete("DELETE FROM pago_detalle WHERE idpago = $idpago;");
+                DB::delete("DELETE FROM pago_voucher WHERE idpago = $idpago;");
+            });
+            $this->response['message'] = 'Pago eliminado';
+            $this->response['ok'] = true;
+            return response()->json($this->response, 200);
+        } catch (\Throwable $th) {
+            $this->response['message'] = 'Ocurrio un error al eliminar el Pago' . $th;
+            $this->response['ok'] = false;
+            return response()->json($this->response, 400);
+        }
+    }
 }

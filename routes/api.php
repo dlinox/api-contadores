@@ -32,6 +32,10 @@ Route::get('/agremiado/pagos-pendientes', [AgremiadosController::class, 'getPago
 Route::post('/agremiado/detalle-pagos', [AgremiadosController::class, 'getDetallePagos'])
     ->name('detalle-pagos');
 
+Route::delete('/agremiado/pago-eliminar/{idpago}', [AgremiadosController::class, 'eliminarPago'])
+    ->name('pago-eliminar');
+
+
 
 Route::get('/agremiado/detalle-habilidad', [AgremiadosController::class, 'getDetalleHabilidad'])
     ->name('detalle-habilidad');
