@@ -32,6 +32,7 @@ class LoginController extends Controller
                 "direccion" => $user->direccion,
                 "dni" => $user->dni,
                 "movil" => $user->movil,
+                "habil" => $user->situacion,
             ],
             'token' => $token,
             'message' => 'success',
@@ -54,6 +55,7 @@ class LoginController extends Controller
                 "direccion" => $user->direccion,
                 "dni" => $user->dni,
                 "movil" => $user->movil,
+                "habil" => $user->situacion,
             ],
             'message' => 'Datos de usuario',
         ];
