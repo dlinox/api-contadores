@@ -25,7 +25,7 @@ class LoginController extends Controller
         $this->response = [
             'ok' => true,
             'usuario' => (object)[
-                "nombre" => $user->nombres . $user->paterno . $user->materno,
+                "nombre" => $user->nombres . ' ' . $user->paterno . ' ' . $user->materno,
                 "colegiatura" => $request->colegiatura,
                 "correo" =>  $user->email,
                 "matricula" => $user->nummat,
