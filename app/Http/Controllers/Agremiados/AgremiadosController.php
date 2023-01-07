@@ -242,7 +242,7 @@ class AgremiadosController extends Controller
         try {
             $resp =  DB::update("UPDATE agremiado 
             SET $campo = $dato
-            WHERE idagremiado = {$this->user->idagremiado}");
+            WHERE idagremiado = '{$this->user->idagremiado}' ;");
 
             if ($resp) {
                 $this->response['message'] = 'Exito';
