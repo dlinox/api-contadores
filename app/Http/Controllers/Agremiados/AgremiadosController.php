@@ -240,14 +240,14 @@ class AgremiadosController extends Controller
         //agremiado
 
         try {
-            $resp =  Agremiado::where('idagremiado', $this->user->idagremiado)->update([$campo  => $dato]);
+            $resp =  Agremiado::where('idagremiado', $this->user->idagremiado)->update([$campo  => $dato])->toSql();
 
             if ($resp) {
                 $this->response['message'] = 'Exito';
                 $this->response['ok'] = true;
                 return response()->json($this->response, 200);
             }
-            $this->response['message'] = 'Ocurrio un error 5' . $resp;
+            $this->response['message'] = 'Ocurrio un error 6' . $resp;
             $this->response['ok'] = false;
             return response()->json($this->response, 400);
         } catch (\Throwable $th) {
