@@ -19,6 +19,8 @@ class Agremiado extends Authenticatable
         'email',
         'password',
         'login',
+        'movil',
+        'direccion',
     ];
 
     public $timestamps = false;
