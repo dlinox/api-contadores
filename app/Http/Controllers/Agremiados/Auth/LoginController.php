@@ -40,6 +40,7 @@ class LoginController extends Controller
                 'token' => $token,
                 'message' => 'success',
             ];
+            return response()->json($this->response, 200);
         } else {
             $this->response = [
                 'ok' => false,
@@ -56,9 +57,10 @@ class LoginController extends Controller
                 'token' => '',
                 'message' => 'Error',
             ];
+            return response()->json($this->response, 400);
         }
 
-        return response()->json($this->response, 200);
+       
     }
 
     public function me()
