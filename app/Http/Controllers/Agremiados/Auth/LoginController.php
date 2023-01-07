@@ -19,24 +19,44 @@ class LoginController extends Controller
 
     public function Login(Request $request)
     {
-        $user = Agremiado::where('login', $request->colegiatura)->first();
+        $user = Agremiado::where('login', $request->colegiatura)
+            ->where('password', sha1($request->clave))
+            ->first();
 
-        $token =  $user->createToken('Mobil')->plainTextToken;
-        $this->response = [
-            'ok' => true,
-            'usuario' => (object)[
-                "nombre" => $user->nombres . ' ' . $user->paterno . ' ' . $user->materno,
-                "colegiatura" => $request->colegiatura,
-                "correo" =>  $user->email,
-                "matricula" => $user->nummat,
-                "direccion" => $user->direccion,
-                "dni" => $user->dni,
-                "movil" => $user->movil,
-                "habil" => $user->situacion,
-            ],
-            'token' => $token,
-            'message' => 'success',
-        ];
+        if ($user) {
+            $token =  $user->createToken('Mobil')->plainTextToken;
+            $this->response = [
+                'ok' => true,
+                'usuario' => (object)[
+                    "nombre" => $user->nombres . ' ' . $user->paterno . ' ' . $user->materno,
+                    "colegiatura" => $request->colegiatura,
+                    "correo" =>  $user->email,
+                    "matricula" => $user->nummat,
+                    "direccion" => $user->direccion,
+                    "dni" => $user->dni,
+                    "movil" => $user->movil,
+                    "habil" => $user->situacion,
+                ],
+                'token' => $token,
+                'message' => 'success',
+            ];
+        } else {
+            $this->response = [
+                'ok' => false,
+                'usuario' => (object)[
+                    "nombre" => '',
+                    "colegiatura" => '',
+                    "correo" =>  '',
+                    "matricula" => '',
+                    "direccion" => '',
+                    "dni" => '',
+                    "movil" => '',
+                    "habil" => '',
+                ],
+                'token' => '',
+                'message' => 'Error',
+            ];
+        }
 
         return response()->json($this->response, 200);
     }
@@ -63,10 +83,11 @@ class LoginController extends Controller
         return response()->json($this->response, 200);
     }
 
-    public function buscarAgremiado($nummat)
+    public function buscarAgremiado($nummat, $dni)
     {
 
         $user = Agremiado::where('nummat', $nummat)
+            ->where('dni', $dni)
             ->where('password', '')
             ->where('login', '')
             ->first();
