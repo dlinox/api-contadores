@@ -237,14 +237,18 @@ class AgremiadosController extends Controller
 
         $campo = $request->campo;
         $dato = $request->dato;
-
-        DB::update("UPDATE agremiado 
+        //agremiado
+        $resp =  DB::update("UPDATE agremiado 
         SET $campo = '$dato'
         WHERE idagremiado = {$this->user->idagremiado}");
-        
 
-        $this->response['message'] = 'Ocurrio un error al eliminar el Pago';
-        $this->response['ok'] = true;
-        return response()->json($this->response, 200);
+        if($resp){
+            $this->response['message'] = 'Exito';
+            $this->response['ok'] = true;
+            return response()->json($this->response, 200);
+        }
+        $this->response['message'] = 'Ocurrio un error';
+        $this->response['ok'] = false;
+        return response()->json($this->response, 400);
     }
 }
