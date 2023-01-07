@@ -240,7 +240,7 @@ class AgremiadosController extends Controller
         //agremiado
 
         try {
-            $resp =  Agremiado::where('idagremiado', $this->user->idagremiado)->update(["$campo"  => $dato]);
+            $resp =  Agremiado::where('idagremiado', $this->user->idagremiado)->update(['movil'  => $dato]);
 
             $query = DB::update('UPDATE agremiado SET ' . $campo . ' = ' . $dato . ' where idagremiado = ' . $this->user->idagremiado . ';');
 
@@ -252,7 +252,7 @@ class AgremiadosController extends Controller
                 $this->response['ok'] = true;
                 return response()->json($this->response, 200);
             }
-            $this->response['message'] = 'Ocurrio un error 8 - ' . $resp;
+            $this->response['message'] = 'Ocurrio un error 10 - ' . $resp;
             $this->response['campo'] = $campo;
             $this->response['dato'] = $dato;
             $this->response['query'] = $query;
