@@ -91,7 +91,8 @@ class LoginController extends Controller
 
         $user = Agremiado::where('nummat', $nummat)
             ->where('dni', $dni)
-            ->where(DB::raw("login = '' OR password = '' OR password IS NULL OR login IS NULL"))
+            ->whereRaw('password IS NULL OR password = ?', [''])
+            ->whereRaw('login IS NULL OR login = ?', [''])
             ->first();
 
         if ($user) {
