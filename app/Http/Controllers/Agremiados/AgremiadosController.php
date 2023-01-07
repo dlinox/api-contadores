@@ -263,7 +263,6 @@ class AgremiadosController extends Controller
             $this->response['message'] = $th;
             $this->response['campo'] = $campo;
             $this->response['dato'] = $dato;
-            $this->response['query'] = $query;
             $this->response['ok'] = false;
             return response()->json($this->response, 400);
         }
