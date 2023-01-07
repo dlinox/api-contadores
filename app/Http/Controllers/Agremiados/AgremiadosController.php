@@ -242,7 +242,7 @@ class AgremiadosController extends Controller
         try {
             $resp =  Agremiado::where('idagremiado', $this->user->idagremiado)->update([$campo  => $dato]);
 
-            $query = DB::update("UPDATE agremiado SET '$campo' = '$dato' where 'idagremiado' = '{$this->user->idagremiado}';");
+            $query = DB::update("UPDATE agremiado SET $campo = $dato where idagremiado = {$this->user->idagremiado};");
 
             if ($resp) {
                 $this->response['message'] = 'Exito  -  sql: ' . $resp;
