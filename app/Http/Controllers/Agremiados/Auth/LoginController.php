@@ -95,7 +95,7 @@ class LoginController extends Controller
             ->where(function ($query) use ($nummat, $dni) {
                 return $query
                     ->orWhere('login', '')
-                    ->whereNull('login');
+                    ->orwhereNull('login');
             })
             //->whereRaw('password IS NULL OR password = ?', [''])
             //->whereRaw('login IS NULL OR login = ?', [''])
