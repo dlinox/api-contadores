@@ -42,6 +42,7 @@ class AgremiadosController extends Controller
         $this->response['ok'] = true;
         return response()->json($this->response, 200);
     }
+
     public function getDetallePagos(Request $request)
     {
         $anio = $request->anio;
@@ -106,11 +107,9 @@ class AgremiadosController extends Controller
 
     function crearUsuario(Request $request)
     {
-
         $agremiado = Agremiado::where('idagremiado', $request->id)
             ->first();
         $agremiado->email = $request->email;
-
         DB::transaction(function () use ($agremiado) {
             $password =  Str::random(8);
             $agremiado->password =  sha1($password);
@@ -228,6 +227,22 @@ class AgremiadosController extends Controller
             $anio = "";
         }
         $this->response['fecha'] = $mes . $anio;
+        $this->response['message'] = 'Ocurrio un error al eliminar el Pago';
+        $this->response['ok'] = true;
+        return response()->json($this->response, 200);
+    }
+
+    public function editarDatoUsuario(Request $request)
+    {
+
+        $campo = $request->campo;
+        $dato = $request->dato;
+
+        DB::update("UPDATE agremiado 
+        SET $campo = '$dato'
+        WHERE idagremiado = {$this->user->idagremiado}");
+        
+
         $this->response['message'] = 'Ocurrio un error al eliminar el Pago';
         $this->response['ok'] = true;
         return response()->json($this->response, 200);

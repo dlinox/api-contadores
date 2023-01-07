@@ -42,7 +42,6 @@ class Pago extends Model
 
     public function getDetallePagos($agremiado, $anio, $tipo)
     {
-
         return DB::select(
             "SELECT v.idventa id, v.anio, v.idserie, concat(v.idserie,'-',v.numero) numero, sum(round(vd.cantidad*vd.precio,2)) importe, DATE_FORMAT(v.fecha, '%d/%m/%Y') fecha, f.desforma, IF(v.idforma='5',v.clave,'') print 
                 from ventadetalle vd 
