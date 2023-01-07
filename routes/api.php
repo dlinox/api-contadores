@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/login', [LoginController::class, 'Login'])
     ->name('login');
 
-Route::get('/auth/buscar-agremiado/{nummat}', [LoginController::class, 'buscarAgremiado'])
+Route::get('/auth/buscar-agremiado/{nummat}/{dni}', [LoginController::class, 'buscarAgremiado'])
     ->name('buscar-agremiado');
 
 Route::post('/auth/cuenta-agremiado', [AgremiadosController::class, 'crearUsuario'])
