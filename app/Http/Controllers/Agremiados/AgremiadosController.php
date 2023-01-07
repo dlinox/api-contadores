@@ -252,7 +252,7 @@ class AgremiadosController extends Controller
                 $this->response['ok'] = true;
                 return response()->json($this->response, 200);
             }
-            $this->response['message'] = 'Ocurrio un error 10 - ' . $resp;
+            $this->response['message'] = 'Ocurrio un error 11 - ' . $resp;
             $this->response['campo'] = $campo;
             $this->response['dato'] = $dato;
             $this->response['query'] = $query;
