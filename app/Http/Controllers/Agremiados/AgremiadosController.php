@@ -240,7 +240,7 @@ class AgremiadosController extends Controller
         //agremiado
 
         try {
-            $resp =  $this->agremiado->where('idagremiado', $this->user->idagremiado)->update([$campo  => "'$dato'"]);
+            $resp =  $this->agremiado->where('idagremiado', $this->user->idagremiado)->update([$campo  => "$dato"]);
 
             //$query = DB::update("UPDATE agremiado SET movil = $dato  where idagremiado =  {$this->user->idagremiado};");
 
