@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Agremiado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -90,8 +91,7 @@ class LoginController extends Controller
 
         $user = Agremiado::where('nummat', $nummat)
             ->where('dni', $dni)
-            ->where('password', '')
-            ->where('login', '')
+            ->where(DB::raw("login = '' OR password = '' OR password IS NULL OR login IS NULL"))
             ->first();
 
         if ($user) {
