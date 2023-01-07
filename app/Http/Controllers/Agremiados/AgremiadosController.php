@@ -247,7 +247,7 @@ class AgremiadosController extends Controller
                 $this->response['ok'] = true;
                 return response()->json($this->response, 200);
             }
-            $this->response['message'] = 'Ocurrio un error 2' . $resp;
+            $this->response['message'] = 'Ocurrio un error 3' . $resp;
             $this->response['ok'] = false;
             return response()->json($this->response, 400);
         } catch (\Throwable $th) {
