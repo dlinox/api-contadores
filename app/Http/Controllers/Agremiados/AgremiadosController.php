@@ -266,4 +266,14 @@ class AgremiadosController extends Controller
             return response()->json($this->response, 400);
         }
     }
+
+    public function dowlosdPDF()
+    {
+
+        //$this->response['ok'] = 'holas';
+        //return response()->json($this->response, 400);
+
+        header("Location: https://online.ccppuno.org.pe/habilidad/imprimir/2520/mqeiwqzcp5dcubgqkc6h");
+        die();
+    }
 }

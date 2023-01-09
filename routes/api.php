@@ -34,7 +34,7 @@ Route::post('/agremiado/detalle-pagos', [AgremiadosController::class, 'getDetall
 
 Route::post('/agremiado/editar', [AgremiadosController::class, 'editarDatoUsuario'])
     ->name('agremiado-editar');
-    
+
 
 Route::delete('/agremiado/pago-eliminar/{idpago}', [AgremiadosController::class, 'eliminarPago'])
     ->name('pago-eliminar');
@@ -56,8 +56,13 @@ Route::post('/agremiado/nuevo-pago', [AgremiadosController::class, 'guardarPago'
 Route::get('/agremiado/conceptos', [AgremiadosController::class, 'getConceptos'])
     ->name('conceptos');
 
+Route::get('/pdf', [AgremiadosController::class, 'dowlosdPDF'])
+    ->name('pdf');
+
 Route::middleware('auth')->get('/auth/user', [LoginController::class, 'me'])
     ->name('me');
+
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
