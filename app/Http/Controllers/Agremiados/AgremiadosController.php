@@ -50,7 +50,7 @@ class AgremiadosController extends Controller
 
         $pagos_detalle =  $this->pago->getDetallePagos($this->user->idagremiado, $anio, $tipo);
         $this->response['data'] = $pagos_detalle;
-        $this->response['message'] = 'Exito';
+        $this->response['message'] = 'Exito Tipo: '  . $tipo . ' Anio: ' . $anio;
         $this->response['ok'] = true;
         return response()->json($this->response, 200);
     }

@@ -91,8 +91,7 @@ class LoginController extends Controller
 
         $user = Agremiado::where('nummat', $nummat)
             ->where('dni', $dni)
-
-            ->where(function ($query) use ($nummat, $dni) {
+            ->where(function ($query) {
                 return $query
                     ->orWhere('login', '')
                     ->orwhereNull('login');
