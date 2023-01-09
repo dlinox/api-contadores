@@ -41,6 +41,9 @@
     <iframe src="https://online.ccppuno.org.pe/habilidad/imprimir/2520/mqeiwqzcp5dcubgqkc6h" id="preview_habilidad" width="100%" height="100%"  >
 
     </iframe>
+
+
+    <a href="https://online.ccppuno.org.pe/habilidad/imprimir/2520/mqeiwqzcp5dcubgqkc6h" download="">DESCARGAR</a>
 </body>
 
 </html>
