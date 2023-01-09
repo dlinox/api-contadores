@@ -47,7 +47,7 @@ class Pago extends Model
                 from ventadetalle vd 
                 left join venta v on v.idventa = vd.idventa 
                 left join formapago f on f.idforma = v.idforma 
-                where v.anio like '$anio%' and v.idagremiado = '$agremiado' and v.idsede like '$tipo%' 
+                where v.anio like '$anio%' and v.idagremiado = '$agremiado' and f.desforma like '$tipo%' 
                 GROUP BY v.idventa, v.anio, v.idserie, v.numero 
                 order by v.anio, v.idserie, v.numero desc"
         );
