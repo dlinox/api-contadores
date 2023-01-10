@@ -12,9 +12,8 @@
 
     <!-- Styles -->
     <style>
- 
-
         body {
+            font-family: 'Nunito', sans-serif;
             margin: 0;
             padding: 0;
             height: 100vh;
@@ -23,27 +22,19 @@
             display: flex;
             overflow: hidden;
         }
-      #preview_habilidad{
-        margin: 0;
-        padding: 0;
-      }
-        
-    </style>
 
-    <style>
-        body {
-            font-family: 'Nunito', sans-serif;
+        #preview_habilidad {
+            margin: 0;
+            padding: 0;
         }
     </style>
+
 </head>
 
 <body class="antialiased">
-    <iframe src="https://online.ccppuno.org.pe/habilidad/imprimir/2520/mqeiwqzcp5dcubgqkc6h" id="preview_habilidad" width="100%" height="100%"  >
-
+    <iframe src="https://online.ccppuno.org.pe/habilidad/imprimir/2520/mqeiwqzcp5dcubgqkc6h" id="preview_habilidad" width="100%" height="100%">
     </iframe>
-
-
-    <a href="https://online.ccppuno.org.pe/habilidad/imprimir/2520/mqeiwqzcp5dcubgqkc6h" download="">DESCARGAR</a>
+    <a href="https://online.ccppuno.org.pe/habilidad/imprimir/2520/mqeiwqzcp5dcubgqkc6h" download>DESCARGAR</a>
 </body>
 
 </html>

@@ -8,6 +8,7 @@ use App\Models\Agremiado;
 use App\Models\Habilidad;
 use App\Models\Pago;
 use App\Models\PagoDetalle;
+use App\Models\PagoVoucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -70,8 +71,14 @@ class AgremiadosController extends Controller
 
         if ($request->file('file')) {
 
+         
+
             try {
                 DB::transaction(function () use ($request) {
+
+                    $fileName = Str::random(8) . '-' . time() . '.' . $request->file('file')->extension();
+                    $request->file('file')->move(public_path('uploads'), $fileName);
+
                     $pago = $this->pago->create([
                         'idagremiado' => $this->user->idagremiado,
                         'total' => $request->total,
@@ -83,6 +90,13 @@ class AgremiadosController extends Controller
                         'cantidad' => $request->cantidad,
                         'precio' => $request->precio,
                         //'cuotas' => ,
+                    ]);
+                    PagoVoucher::create([
+                        'numvoucher' =>  $request->num_operacion,
+                        'fecha' =>  $request->fecha,
+                        'importe' =>  $request->importe,
+                        'idpago' =>  $pago->idpago,
+                        'imagen' =>  $fileName,
                     ]);
                 });
 
