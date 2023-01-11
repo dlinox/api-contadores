@@ -49,7 +49,7 @@ class Pago extends Model
                     'precio' => $pago->total,
                     'numvoucher' => $pago->numvoucher ? $pago->numvoucher : '' ,
                     'importe' => $pago->importe ? $pago->importe : '' ,
-                    'fecha' => $pago->fecha  ? $pago->fecha : '',
+                    'fecha_pago' => $pago->fecha  ? $pago->fecha : '',
                     'imagen' => $pago->image ? url("/uploads/{$pago->imagen}") : '',
                 ];
             });
