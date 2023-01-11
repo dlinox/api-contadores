@@ -67,12 +67,7 @@ class AgremiadosController extends Controller
 
     public function guardarPago(Request $request)
     {
-
-
         if ($request->file('file')) {
-
-         
-
             try {
                 DB::transaction(function () use ($request) {
 
@@ -112,6 +107,48 @@ class AgremiadosController extends Controller
         } else {
             //$this->response['data'] = $hablidad_detalle;
             $this->response['message'] = 'Exito con foto :)';
+            $this->response['ok'] = true;
+            return response()->json($this->response, 400);
+        }
+    }
+
+    public function editarPago(Request $request)
+    {
+
+        try {
+            $this->pago
+                ->where('idpago', $request->id_pago)
+                ->where('idagremiado', $this->user->idagremiado)
+                ->update(['total'  => $request->total,]);
+
+            PagoDetalle::where('idpago', $request->id_pago)
+                ->update([
+                    'idconcepto' => $request->concepto,
+                    'cantidad' => $request->cantidad,
+                    'precio' => $request->precio,
+                    //'cuotas' => ,
+                ]);
+
+            $data_voucher = [
+                'numvoucher' =>  $request->num_operacion,
+                'fecha' =>  $request->fecha,
+                'importe' =>  $request->importe,
+            ];
+
+            if ($request->file('file')) {
+                $fileName = Str::random(8) . '-' . time() . '.' . $request->file('file')->extension();
+                $request->file('file')->move(public_path('uploads'), $fileName);
+                $data_voucher['imagen'] =  $fileName;
+            }
+
+            PagoVoucher::where('idpago', $request->id_pago)
+                ->update($data_voucher);
+
+            $this->response['message'] = 'Exito';
+            $this->response['ok'] = true;
+            return response()->json($this->response, 200);
+        } catch (\Throwable $th) {
+            $this->response['message'] = $th;
             $this->response['ok'] = true;
             return response()->json($this->response, 400);
         }

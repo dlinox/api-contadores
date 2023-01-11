@@ -53,6 +53,10 @@ Route::get('/agremiado/detalle-habilidad', [AgremiadosController::class, 'getDet
 Route::post('/agremiado/nuevo-pago', [AgremiadosController::class, 'guardarPago'])
     ->name('nuevo-pago');
 
+Route::post('/agremiado/editar-pago', [AgremiadosController::class, 'editarPago'])
+    ->name('editar-pago');
+
+
 Route::get('/agremiado/conceptos', [AgremiadosController::class, 'getConceptos'])
     ->name('conceptos');
 
