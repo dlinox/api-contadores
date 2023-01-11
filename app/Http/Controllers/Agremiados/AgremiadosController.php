@@ -100,7 +100,6 @@ class AgremiadosController extends Controller
                     ]);
                 });
 
-
                 $this->response['message'] = 'Exito';
                 $this->response['ok'] = true;
                 return response()->json($this->response, 200);

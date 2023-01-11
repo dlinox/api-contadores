@@ -23,8 +23,19 @@ class Pago extends Model
 
     public function getPagoPendiente($agremiado)
     {
-        return $this->select('pago_deposito.idpago', 'pago_deposito.estado', 'pago_deposito.hora', 'pago_deposito.total', 'conceptopago.desconcepto')
+        return $this->select(
+            'pago_deposito.idpago',
+            'pago_deposito.estado',
+            'pago_deposito.hora',
+            'pago_deposito.total',
+            'conceptopago.desconcepto',
+            'pago_voucher.numvoucher',
+            'pago_voucher.fecha',
+            'pago_voucher.importe',
+            'pago_voucher.imagen'
+        )
             ->leftJoin('pago_detalle', 'pago_detalle.idpago', '=', 'pago_deposito.idpago')
+            ->leftJoin('pago_voucher', 'pago_voucher.idpago', '=', 'pago_deposito.idpago')
             ->leftJoin('conceptopago', 'pago_detalle.idconcepto', '=', 'conceptopago.idconcepto')
             ->where('pago_deposito.idagremiado', $agremiado)
             ->where('pago_deposito.estado', '!=', '1')
@@ -36,6 +47,10 @@ class Pago extends Model
                     'estado' => $pago->estado,
                     'concepto' => $pago->desconcepto,
                     'precio' => $pago->total,
+                    'numvoucher' => $pago->numvoucher,
+                    'importe' => $pago->importe,
+                    'fecha' => $pago->fecha,
+                    'imagen' => url("/uploads/{$pago->imagen}"),
                 ];
             });
     }
