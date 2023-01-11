@@ -48,10 +48,10 @@ class Pago extends Model
                     'concepto' => $pago->desconcepto,
                     'precio' => $pago->total,
 
-                    'numvoucher' => $pago->numvoucher ? $pago->numvoucher : '',
+                    'numvoucher' => $pago->numvoucher ? $pago->numvoucher : '' ,
                     'importe' => $pago->importe ? $pago->importe : 0.0,
                     'fecha_pago' => $pago->fecha  ? $pago->fecha : '',
-                    'imagen' => $pago->image != '' ? url("/uploads/{$pago->imagen}") : '',
+                    'imagen' => url("/uploads/{$pago->imagen}"),
                 ];
             });
     }
