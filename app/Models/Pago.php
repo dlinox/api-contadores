@@ -51,7 +51,7 @@ class Pago extends Model
                     'numvoucher' => $pago->numvoucher ? $pago->numvoucher : '' ,
                     'importe' => $pago->importe ? $pago->importe : 0.0,
                     'fecha_pago' => $pago->fecha  ? $pago->fecha : '',
-                    'imagen' => "/uploads/{$pago->imagen}",
+                    'imagen' => "uploads/{$pago->imagen}",
                 ];
             });
     }

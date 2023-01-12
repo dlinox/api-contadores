@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
+use function PHPSTORM_META\type;
+
 class AgremiadosController extends Controller
 {
     //
@@ -67,6 +69,7 @@ class AgremiadosController extends Controller
 
     public function guardarPago(Request $request)
     {
+
         if ($request->file('file')) {
             try {
                 DB::transaction(function () use ($request) {
@@ -79,13 +82,21 @@ class AgremiadosController extends Controller
                         'total' => $request->total,
                     ]);
 
-                    PagoDetalle::create([
+                    $data_pago_detalle = [
                         'idpago' => $pago->idpago,
                         'idconcepto' => $request->concepto,
                         'cantidad' => $request->cantidad,
                         'precio' => $request->precio,
-                        //'cuotas' => ,
-                    ]);
+                    ];
+
+                    if ($request->concepto == 0) {
+                        $array = json_decode($request->cuotas);
+                        sort($array);
+                        $data_pago_detalle['cuotas'] = $request->anio_cuotas . '-' . implode(',', $array);
+                    }
+
+                    PagoDetalle::create($data_pago_detalle);
+
                     PagoVoucher::create([
                         'numvoucher' =>  $request->num_operacion,
                         'fecha' =>  $request->fecha,
@@ -114,20 +125,29 @@ class AgremiadosController extends Controller
 
     public function editarPago(Request $request)
     {
-
         try {
             $this->pago
                 ->where('idpago', $request->id_pago)
                 ->where('idagremiado', $this->user->idagremiado)
                 ->update(['total'  => $request->total,]);
 
+            $data_pago_detalle = [
+                'idconcepto' => $request->concepto,
+                'cantidad' => $request->cantidad,
+                'precio' => $request->precio,
+            ];
+
+            if ($request->concepto == 0) {
+                $array = json_decode($request->cuotas);
+                sort($array);
+                $data_pago_detalle['cuotas'] = $request->anio_cuotas . '-' . implode(',', $array);
+            }
+            else{
+                $data_pago_detalle['cuotas'] = '';
+            }
+
             PagoDetalle::where('idpago', $request->id_pago)
-                ->update([
-                    'idconcepto' => $request->concepto,
-                    'cantidad' => $request->cantidad,
-                    'precio' => $request->precio,
-                    //'cuotas' => ,
-                ]);
+                ->update($data_pago_detalle);
 
             $data_voucher = [
                 'numvoucher' =>  $request->num_operacion,
