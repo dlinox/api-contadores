@@ -152,7 +152,7 @@ class AgremiadosController extends Controller
                 'numvoucher' =>  $request->num_operacion,
                 'fecha' =>  $request->fecha,
                 'importe' =>  $request->importe,
-                //'idpago' => $request->id_pago,
+                'idpago' => $request->id_pago,
             ];
 
             if ($request->file('file')) {
@@ -162,13 +162,15 @@ class AgremiadosController extends Controller
             }
 
             $pago_voucher = PagoVoucher::where('idpago', $request->id_pago)
-                ->update($data_voucher);
-
-            $this->response['message'] = 'Exito ';
+                ->first();
 
             if (!$pago_voucher) {
-                $this->response['message'] = 'Exito no se editp';
-                //PagoVoucher::create($data_voucher);
+                $this->response['message'] = 'Se creo con exito';
+                PagoVoucher::where('idpago', $request->id_pago)
+                    ->create($data_voucher);
+            } else {
+                $this->response['message'] = 'Se edito con exito';
+                $pago_voucher->update($data_voucher);
             }
 
             //$this->response['message'] = 'Exito ';
