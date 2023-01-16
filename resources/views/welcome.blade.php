@@ -20,11 +20,15 @@
         }
 
         .app {
-            margin: 0;
-            padding: 0;
+  
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: #0D3880;
+        }
+        .img-logo{
+            width: 15rem;
+            max-width: 95%;
         }
     </style>
 
@@ -32,7 +36,7 @@
 
 <body class="app">
 
-<h1>CCPPUNO</h1>
+<img class="img-logo" src="/assets/imgs/logo.png" alt="">
   
 </body>
 
