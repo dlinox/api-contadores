@@ -162,7 +162,8 @@ class AgremiadosController extends Controller
             }
 
             PagoVoucher::where('idpago', $request->id_pago)
-                ->update($data_voucher);
+                ->updateOrCreate($data_voucher);
+
 
             $this->response['message'] = 'Exito';
             $this->response['ok'] = true;
