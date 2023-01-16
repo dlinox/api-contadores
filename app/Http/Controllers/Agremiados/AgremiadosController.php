@@ -153,6 +153,7 @@ class AgremiadosController extends Controller
                 'numvoucher' =>  $request->num_operacion,
                 'fecha' =>  $request->fecha,
                 'importe' =>  $request->importe,
+                'idpago' => $request->id_pago,
             ];
 
             if ($request->file('file')) {
