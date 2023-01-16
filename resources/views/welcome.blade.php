@@ -5,12 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>CCPPUNO</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Styles -->
     <style>
         body {
             font-family: 'Nunito', sans-serif;
@@ -18,23 +14,26 @@
             padding: 0;
             height: 100vh;
             position: relative;
-            width: 100%;
+            width: 100vw;
             display: flex;
             overflow: hidden;
         }
 
-        #preview_habilidad {
+        #app {
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 
 </head>
 
-<body class="antialiased">
-    <iframe src="https://online.ccppuno.org.pe/habilidad/imprimir/2520/mqeiwqzcp5dcubgqkc6h" id="preview_habilidad" width="100%" height="100%">
-    </iframe>
-    <a href="https://online.ccppuno.org.pe/habilidad/imprimir/2520/mqeiwqzcp5dcubgqkc6h" download>DESCARGAR</a>
+<body class="app">
+
+<h1>CCPPUNO</h1>
+  
 </body>
 
 </html>
