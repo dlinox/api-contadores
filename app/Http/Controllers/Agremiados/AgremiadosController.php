@@ -112,7 +112,7 @@ class AgremiadosController extends Controller
                 return response()->json($this->response, 200);
             } catch (\Throwable $th) {
 
-                $this->response['message'] =  $th;
+                $this->response['message'] =  $th->getMessage();
                 $this->response['ok'] = false;
                 return response()->json($this->response, 200);
             }
