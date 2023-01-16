@@ -168,12 +168,12 @@ class AgremiadosController extends Controller
                 PagoVoucher::create($data_voucher);
             }
 
-            $this->response['message'] = 'Exito';
+            $this->response['message'] = 'Exito ' . $pago_voucher;
             $this->response['ok'] = true;
             return response()->json($this->response, 200);
         } catch (\Throwable $th) {
             $this->response['message'] = $th;
-            $this->response['ok'] = true;
+            $this->response['ok'] = false;
             return response()->json($this->response, 400);
         }
     }
