@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Throwable;
 
 use function PHPSTORM_META\type;
 
@@ -164,20 +165,11 @@ class AgremiadosController extends Controller
             $pago_voucher = PagoVoucher::where('idpago', $request->id_pago)
                 ->first();
 
-            if (!$pago_voucher) {
+            if ($pago_voucher === null) {
                 $data_voucher['idpago'] = $request->id_pago;
 
-                PagoVoucher::create([
-                    'numvoucher' =>  $request->num_operacion,
-                    'fecha' =>  $request->fecha,
-                    'importe' =>  $request->importe,
-                    'idpago' =>  $request->id_pago,
-                    'imagen' =>  $fileName,
-                ]);
-
-                //PagoVoucher::create($data_voucher);
+                PagoVoucher::create($data_voucher);
                 $this->response['message'] = 'Se creo con exito';
-
             } else {
                 $this->response['message'] = 'Se edito con exito';
                 $pago_voucher->update($data_voucher);
@@ -186,8 +178,8 @@ class AgremiadosController extends Controller
             //$this->response['message'] = 'Exito ';
             $this->response['ok'] = true;
             return response()->json($this->response, 200);
-        } catch (\Throwable $th) {
-            $this->response['message'] = $th;
+        } catch (Throwable $e) {
+            $this->response['message'] = $e;
             $this->response['ok'] = false;
             return response()->json($this->response, 400);
         }
