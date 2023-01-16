@@ -166,7 +166,6 @@ class AgremiadosController extends Controller
 
             if ($pago_voucher === null) {
                 $data_voucher['idpago'] = $request->id_pago;
-
                 PagoVoucher::create($data_voucher);
                 $this->response['message'] = 'Se creo con exito';
             } else {
