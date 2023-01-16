@@ -32,7 +32,8 @@ class Pago extends Model
             'pago_voucher.numvoucher',
             'pago_voucher.fecha',
             'pago_voucher.importe',
-            'pago_voucher.imagen'
+            'pago_voucher.imagen',
+            'pago_detalle.cuotas',
         )
             ->leftJoin('pago_detalle', 'pago_detalle.idpago', '=', 'pago_deposito.idpago')
             ->leftJoin('pago_voucher', 'pago_voucher.idpago', '=', 'pago_deposito.idpago')
@@ -47,11 +48,12 @@ class Pago extends Model
                     'estado' => $pago->estado,
                     'concepto' => $pago->desconcepto,
                     'precio' => $pago->total,
-
                     'numvoucher' => $pago->numvoucher ? $pago->numvoucher : '',
                     'importe' => $pago->importe ? $pago->importe : 0.0,
                     'fecha_pago' => $pago->fecha  ? $pago->fecha : '',
                     'imagen' =>  $pago->imagen ? "uploads/{$pago->imagen}" :  $pago->imagen,
+                    'cuotas' => $pago->cuotas,
+
                 ];
             });
     }
