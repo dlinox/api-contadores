@@ -164,11 +164,14 @@ class AgremiadosController extends Controller
             $pago_voucher = PagoVoucher::where('idpago', $request->id_pago)
                 ->update($data_voucher);
 
-            //if (!$pago_voucher) {
-            //    PagoVoucher::create($data_voucher);
-            //}
-
             $this->response['message'] = 'Exito ';
+
+            if (!$pago_voucher) {
+                $this->response['message'] = 'Exito no se editp';
+                //PagoVoucher::create($data_voucher);
+            }
+
+            //$this->response['message'] = 'Exito ';
             $this->response['ok'] = true;
             return response()->json($this->response, 200);
         } catch (\Throwable $th) {
