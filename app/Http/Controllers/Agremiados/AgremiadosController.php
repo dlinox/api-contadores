@@ -126,7 +126,7 @@ class AgremiadosController extends Controller
 
     public function editarPago(Request $request)
     {
-        try {
+        // try {
             $this->pago
                 ->where('idpago', $request->id_pago)
                 ->where('idagremiado', $this->user->idagremiado)
@@ -178,11 +178,12 @@ class AgremiadosController extends Controller
             //$this->response['message'] = 'Exito ';
             $this->response['ok'] = true;
             return response()->json($this->response, 200);
-        } catch (Throwable $e) {
-            $this->response['message'] = $e;
-            $this->response['ok'] = false;
-            return response()->json($this->response, 400);
-        }
+
+        // } catch (Throwable $e) {
+        //     $this->response['message'] = $e;
+        //     $this->response['ok'] = false;
+        //     return response()->json($this->response, 400);
+        // }
     }
 
 
