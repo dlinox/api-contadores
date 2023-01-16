@@ -165,9 +165,19 @@ class AgremiadosController extends Controller
                 ->first();
 
             if (!$pago_voucher) {
-                $this->response['message'] = 'Se creo con exito';
                 $data_voucher['idpago'] = $request->id_pago;
-                PagoVoucher::create($data_voucher);
+
+                PagoVoucher::create([
+                    'numvoucher' =>  $request->num_operacion,
+                    'fecha' =>  $request->fecha,
+                    'importe' =>  $request->importe,
+                    'idpago' =>  $request->id_pago,
+                    'imagen' =>  $fileName,
+                ]);
+
+                //PagoVoucher::create($data_voucher);
+                $this->response['message'] = 'Se creo con exito';
+
             } else {
                 $this->response['message'] = 'Se edito con exito';
                 $pago_voucher->update($data_voucher);
