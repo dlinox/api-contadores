@@ -141,8 +141,7 @@ class AgremiadosController extends Controller
                 $array = json_decode($request->cuotas);
                 sort($array);
                 $data_pago_detalle['cuotas'] = $request->anio_cuotas . '-' . implode(',', $array);
-            }
-            else{
+            } else {
                 $data_pago_detalle['cuotas'] = '';
             }
 
@@ -162,9 +161,12 @@ class AgremiadosController extends Controller
                 $data_voucher['imagen'] =  $fileName;
             }
 
-            PagoVoucher::where('idpago', $request->id_pago)
-                ->updateOrCreate($data_voucher);
+            $pago_voucher = PagoVoucher::where('idpago', $request->id_pago)
+                ->update($data_voucher);
 
+            if (!$pago_voucher) {
+                PagoVoucher::create($data_voucher);
+            }
 
             $this->response['message'] = 'Exito';
             $this->response['ok'] = true;
