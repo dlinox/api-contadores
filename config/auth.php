@@ -14,9 +14,14 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'api',
+        'guard' => 'web',
         'passwords' => 'agremiado',
     ],
+
+    // 'defaults' => [
+    //     'guard' => 'api',
+    //     'passwords' => 'agremiado',
+    // ],
 
     /*
     |--------------------------------------------------------------------------
@@ -38,7 +43,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'agremiado',
         ],
 
         'api' => [
