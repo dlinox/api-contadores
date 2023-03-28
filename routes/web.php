@@ -16,14 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
-Route::name('app.')->prefix('app')->group(function () {
+Route::name('app.')->prefix('')->group(function () {
 
-    Route::get('login', [AppLoginController::class, 'index'])
+    Route::get('', [AppLoginController::class, 'index'])
         ->name('login');
 
     Route::post('sign-in', [AppLoginController::class, 'signIn'])
@@ -33,7 +33,7 @@ Route::name('app.')->prefix('app')->group(function () {
         ->name('sign-up');
 
     /**HOME VIEWS */
-    Route::get('', [AppAplicacionController::class, 'index'])->middleware('auth')
+    Route::get('/home', [AppAplicacionController::class, 'index'])->middleware('auth')
         ->name('home');
 
     /**PAGOS */

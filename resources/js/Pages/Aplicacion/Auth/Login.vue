@@ -81,7 +81,7 @@ const rules = [
 ];
 
 const submit = () => {
-    formData.post("/app/sign-in");
+    formData.post("/sign-in");
 };
 </script>
 <style lang="scss">

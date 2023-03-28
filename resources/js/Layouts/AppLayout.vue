@@ -50,24 +50,24 @@ const tap = ref(usePage().props.tap);
 const drawer = ref(false);
 
 const menu_navigation = [
-    { icon: "mdi-home", value: "home", name: "Inicio", route: "/app" },
+    { icon: "mdi-home", value: "home", name: "Inicio", route: "/home" },
     {
         icon: "mdi-account-credit-card-outline",
         value: "pagos",
         name: "Pagos",
-        route: "/app/pagos",
+        route: "/pagos",
     },
     {
         icon: "mdi-file-certificate-outline",
         value: "certificados",
         name: "Certificados",
-        route: "/app/certificados",
+        route: "/certificados",
     },
     {
         icon: "mdi-file-multiple",
         value: "tramites",
         name: "Tramietes",
-        route: "/app/tramites",
+        route: "/tramites",
     },
 ];
 
