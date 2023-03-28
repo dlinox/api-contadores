@@ -40,7 +40,7 @@ class AgremiadosController extends Controller
 
     public function getPagosPendientes()
     {
-        $pagos =  $this->pago->getPagoPendiente($this->user->idagremiado);
+        $pagos =  $this->pago->getPagoPendiente(Auth::user()->idagremiado);
         $this->response['data'] = $pagos;
         $this->response['message'] = 'Exito';
         $this->response['ok'] = true;
