@@ -37,7 +37,7 @@ class AplicacionController extends Controller
         return Inertia::render('Aplicacion/Home/index', [
             'tap' => 'home',
             'habil' => $this->agremiado->getEstadoHabil(),
-            'pagos' => $this->pago->getPagoPendiente($this->user->idagremiado),
+            'pagos' => $this->pago->getPagoPendiente(Auth::user()->idagremiado),
 
         ]);
     }
