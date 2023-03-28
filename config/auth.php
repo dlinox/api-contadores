@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'agremiado',
+        'guard' => 'api',
         'passwords' => 'agremiado',
     ],
 
