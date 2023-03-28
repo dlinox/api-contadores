@@ -14,14 +14,9 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'agremiado',
         'passwords' => 'agremiado',
     ],
-
-    // 'defaults' => [
-    //     'guard' => 'api',
-    //     'passwords' => 'agremiado',
-    // ],
 
     /*
     |--------------------------------------------------------------------------
@@ -42,6 +37,12 @@ return [
 
     'guards' => [
         'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
+        'agremiado' => [
+            'redirectTo' => 'app.home',
             'driver' => 'session',
             'provider' => 'agremiado',
         ],

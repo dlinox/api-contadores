@@ -2,8 +2,7 @@
 
 use App\Http\Controllers\Aplicacion\AplicacionController as AppAplicacionController;
 use App\Http\Controllers\Aplicacion\LoginController as AppLoginController;
-
-
+use App\Http\Controllers\Aplicacion\PagosController as AppPagosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,14 +24,23 @@ Route::get('/', function () {
 Route::name('app.')->prefix('app')->group(function () {
 
     Route::get('login', [AppLoginController::class, 'index'])
-        ->name('index');
+        ->name('login');
+
+    Route::post('sign-in', [AppLoginController::class, 'signIn'])
+        ->name('sign-in');
+
+    Route::post('sign-up', [AppLoginController::class, 'signUp'])
+        ->name('sign-up');
 
     /**HOME VIEWS */
     Route::get('', [AppAplicacionController::class, 'index'])->middleware('auth')
         ->name('home');
 
-    Route::get('/pagos', [AppAplicacionController::class, 'pagosView'])->middleware('auth')
-        ->name('pagos');
+    /**PAGOS */
+    Route::resource('pagos', AppPagosController::class)->middleware('auth');
+    /**PAGOS */
+
+
 
     Route::get('certificados', [AppAplicacionController::class, 'certificadosView'])->middleware('auth')
         ->name('certificados');

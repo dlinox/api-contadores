@@ -1,15 +1,14 @@
+import "./bootstrap";
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
+import { createPinia } from 'pinia'
 
-import '@mdi/font/css/materialdesignicons.css';
-import "vuetify/styles";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
-const vuetify = createVuetify({
-    components,
-    directives,
-});
+import vuetify from "./plugins/vuetify";
+
+import '@vuepic/vue-datepicker/dist/main.css'
+import "vue-advanced-cropper/dist/style.css";
+
+const pinia = createPinia()
 
 createInertiaApp({
     resolve: (name) => {
@@ -20,6 +19,7 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(vuetify)
+            .use(pinia)
             .mount(el);
     },
 });

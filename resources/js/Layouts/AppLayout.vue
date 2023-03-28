@@ -10,12 +10,10 @@
         </v-navigation-drawer>
 
         <v-app-bar class="px-3 text-white" color="#9C000C" flat height="72">
-            <button @click="drawer = !drawer">
-                <v-icon icon="mdi-menu" />
-            </button>
+            <v-btn @click="drawer = !drawer" icon="mdi-menu">
+      
+            </v-btn>
             <v-spacer></v-spacer>
-
-            <v-responsive max-width="156"> </v-responsive>
         </v-app-bar>
 
         <v-main>

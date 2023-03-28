@@ -15,7 +15,7 @@
                 </v-banner>
                 <v-container>
                     <section class="text-center py-3">
-                        <v-btn block size="large" variant="tonal" rounded="lg">
+                        <v-btn block size="large" color="primary" rounded="lg" @click="router.get('/app/pagos/create')" >
                             Registrar pago via internet
                         </v-btn>
                     </section>
@@ -113,8 +113,9 @@
     </AppLayout>
 </template>
 <script setup>
-import AppLayout from "@/Layouts/AppLayout.vue";
 import { ref } from "vue";
+import { router } from "@inertiajs/core";
+import AppLayout from "@/Layouts/AppLayout.vue";
 
 const tab = ref(0);
 

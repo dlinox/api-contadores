@@ -11,6 +11,13 @@ use Inertia\Inertia;
 
 class LoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+       // $this->middleware('guest:admin')->except('logout');
+    }
+
+
     public function index()
     {
         return Inertia::render('Aplicacion/Auth/Login');
@@ -22,10 +29,12 @@ class LoginController extends Controller
             ->where('password', sha1($request->password))
             ->first();
 
-        if (Auth::attempt($user)) {
+        if ($user) {
+            Auth::login($user);
+
             $request->session()->regenerate();
 
-            return Redirect::route('app.index')->with(
+            return Redirect::route('app.home')->with(
                 [
                     'message' => 'Ingresando',
                     'status' => true,

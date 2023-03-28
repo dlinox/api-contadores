@@ -127,55 +127,55 @@ class AgremiadosController extends Controller
     public function editarPago(Request $request)
     {
         // try {
-            $this->pago
-                ->where('idpago', $request->id_pago)
-                ->where('idagremiado', $this->user->idagremiado)
-                ->update(['total'  => $request->total,]);
+        $this->pago
+            ->where('idpago', $request->id_pago)
+            ->where('idagremiado', $this->user->idagremiado)
+            ->update(['total'  => $request->total,]);
 
-            $data_pago_detalle = [
-                'idconcepto' => $request->concepto,
-                'cantidad' => $request->cantidad,
-                'precio' => $request->precio,
-            ];
+        $data_pago_detalle = [
+            'idconcepto' => $request->concepto,
+            'cantidad' => $request->cantidad,
+            'precio' => $request->precio,
+        ];
 
-            if ($request->concepto == 0) {
-                $array = json_decode($request->cuotas);
-                sort($array);
-                $data_pago_detalle['cuotas'] = $request->anio_cuotas . '-' . implode(',', $array);
-            } else {
-                $data_pago_detalle['cuotas'] = '';
-            }
+        if ($request->concepto == 0) {
+            $array = json_decode($request->cuotas);
+            sort($array);
+            $data_pago_detalle['cuotas'] = $request->anio_cuotas . '-' . implode(',', $array);
+        } else {
+            $data_pago_detalle['cuotas'] = '';
+        }
 
-            PagoDetalle::where('idpago', $request->id_pago)
-                ->update($data_pago_detalle);
+        PagoDetalle::where('idpago', $request->id_pago)
+            ->update($data_pago_detalle);
 
-            $data_voucher = [
-                'numvoucher' =>  $request->num_operacion,
-                'fecha' =>  $request->fecha,
-                'importe' =>  $request->importe,
-            ];
+        $data_voucher = [
+            'numvoucher' =>  $request->num_operacion,
+            'fecha' =>  $request->fecha,
+            'importe' =>  $request->importe,
+        ];
 
-            if ($request->file('file')) {
-                $fileName = Str::random(8) . '-' . time() . '.' . $request->file('file')->extension();
-                $request->file('file')->move(public_path('uploads'), $fileName);
-                $data_voucher['imagen'] =  $fileName;
-            }
+        if ($request->file('file')) {
+            $fileName = Str::random(8) . '-' . time() . '.' . $request->file('file')->extension();
+            $request->file('file')->move(public_path('uploads'), $fileName);
+            $data_voucher['imagen'] =  $fileName;
+        }
 
-            $pago_voucher = PagoVoucher::where('idpago', $request->id_pago)
-                ->first();
+        $pago_voucher = PagoVoucher::where('idpago', $request->id_pago)
+            ->first();
 
-            if ($pago_voucher === null) {
-                $data_voucher['idpago'] = $request->id_pago;
-                PagoVoucher::create($data_voucher);
-                $this->response['message'] = 'Se creo con exito';
-            } else {
-                $this->response['message'] = 'Se edito con exito';
-                $pago_voucher->update($data_voucher);
-            }
+        if ($pago_voucher === null) {
+            $data_voucher['idpago'] = $request->id_pago;
+            PagoVoucher::create($data_voucher);
+            $this->response['message'] = 'Se creo con exito';
+        } else {
+            $this->response['message'] = 'Se edito con exito';
+            $pago_voucher->update($data_voucher);
+        }
 
-            //$this->response['message'] = 'Exito ';
-            $this->response['ok'] = true;
-            return response()->json($this->response, 200);
+        //$this->response['message'] = 'Exito ';
+        $this->response['ok'] = true;
+        return response()->json($this->response, 200);
 
         // } catch (Throwable $e) {
         //     $this->response['message'] = $e;
@@ -238,7 +238,7 @@ class AgremiadosController extends Controller
         $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre', 'Enero', 'Febrero'];
         $num_meses = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '01', '02'];
         $estado =  DB::select(
-            "SELECT ultimopago, current_date fecha_actual, paterno, materno, nombres 
+            "SELECT ultimopago, current_date fecha_actual
             from agremiado 
             where flag='T' 
             and idagremiado='{$this->user->idagremiado}'"
@@ -246,12 +246,11 @@ class AgremiadosController extends Controller
 
         $flag = false;
         $habil = false;
-        $nombre = "";
         $hasta = "";
 
         if ($estado) {
             $flag = true;
-            $nombre = $estado->paterno . " " . $estado->materno . " " . $estado->nombres;
+
             $fecha_actual = (string)$estado->fecha_actual;
 
             if (!is_null($estado->ultimopago) and $estado->ultimopago != '') {
@@ -281,9 +280,7 @@ class AgremiadosController extends Controller
 
         $this->response['flag'] = $flag;
         $this->response['habil'] = $habil;
-        $this->response['nombre'] = $nombre;
         $this->response['hasta'] = $hasta;
-        $this->response['message'] = 'Ocurrio un error al eliminar el Pago';
         $this->response['ok'] = true;
         return response()->json($this->response, 200);
     }
