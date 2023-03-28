@@ -49,10 +49,12 @@ class AgremiadosController extends Controller
 
     public function getDetallePagos(Request $request)
     {
+        $user = Auth::user()->idagremiado;
+
         $anio = $request->anio;
         $tipo = $request->tipo;
 
-        $pagos_detalle =  $this->pago->getDetallePagos($this->user->idagremiado, $anio, $tipo);
+        $pagos_detalle =  $this->pago->getDetallePagos($user, $anio, $tipo);
         $this->response['data'] = $pagos_detalle;
         $this->response['message'] = 'Exito Tipo: '  . $tipo . ' Anio: ' . $anio;
         $this->response['ok'] = true;
@@ -61,7 +63,10 @@ class AgremiadosController extends Controller
 
     public function getDetalleHabilidad()
     {
-        $hablidad_detalle =  $this->habilidad->getDetalle($this->user->idagremiado);
+
+        $user = Auth::user()->idagremiado;
+
+        $hablidad_detalle =  $this->habilidad->getDetalle($user);
         $this->response['data'] = $hablidad_detalle;
         $this->response['message'] = 'Exito';
         $this->response['ok'] = true;
@@ -70,7 +75,6 @@ class AgremiadosController extends Controller
 
     public function guardarPago(Request $request)
     {
-
         if ($request->file('file')) {
             try {
                 DB::transaction(function () use ($request) {
@@ -79,7 +83,7 @@ class AgremiadosController extends Controller
                     $request->file('file')->move(public_path('uploads'), $fileName);
 
                     $pago = $this->pago->create([
-                        'idagremiado' => $this->user->idagremiado,
+                        'idagremiado' => Auth::user()->idagremiado,
                         'total' => $request->total,
                     ]);
 
@@ -126,10 +130,12 @@ class AgremiadosController extends Controller
 
     public function editarPago(Request $request)
     {
+        $user = Auth::user()->idagremiado;
+
         // try {
         $this->pago
             ->where('idpago', $request->id_pago)
-            ->where('idagremiado', $this->user->idagremiado)
+            ->where('idagremiado', $user)
             ->update(['total'  => $request->total,]);
 
         $data_pago_detalle = [
@@ -235,13 +241,15 @@ class AgremiadosController extends Controller
 
     public function getEstadoHabil()
     {
+        $user = Auth::user()->idagremiado;
+
         $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre', 'Enero', 'Febrero'];
         $num_meses = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '01', '02'];
         $estado =  DB::select(
             "SELECT ultimopago, current_date fecha_actual
             from agremiado 
             where flag='T' 
-            and idagremiado='{$this->user->idagremiado}'"
+            and idagremiado='{$user}'"
         )[0];
 
         $flag = false;
@@ -288,11 +296,13 @@ class AgremiadosController extends Controller
 
     public function getHastaHabil()
     {
+        $user = Auth::user()->idagremiado;
+
         $row = DB::select("SELECT max(vd.cuotas) ultimo 
         FROM ventadetalle vd 
         LEFT JOIN venta v ON v.idventa = vd.idventa 
         LEFT JOIN agremiado a ON a.idagremiado = v.idagremiado 
-        WHERE a.idagremiado = '{$this->user->idagremiado}' AND vd.idconcepto = '1' ")[0];
+        WHERE a.idagremiado = '{$user}' AND vd.idconcepto = '1' ")[0];
 
         if (!is_null($row->ultimo)) {
             $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -312,13 +322,15 @@ class AgremiadosController extends Controller
     public function editarDatoUsuario(Request $request)
     {
 
+        $user = Auth::user()->idagremiado;
+
         $campo = $request->campo;
         $dato = $request->dato;
         //agremiado
 
         try {
             $dato = $campo == 'password' ? sha1($dato) : $dato;
-            $resp =  $this->agremiado->where('idagremiado', $this->user->idagremiado)->update([$campo  => "$dato"]);
+            $resp =  $this->agremiado->where('idagremiado', $user)->update([$campo  => "$dato"]);
 
             if ($resp) {
                 $this->response['message'] = 'Exito  -  sql: ' . $resp;
